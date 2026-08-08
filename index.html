@@ -3,310 +3,917 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>LinkUp — Your plans deserve more than a group chat</title>
-<meta name="description" content="LinkUp replaces throwaway group chats with structured event spaces.">
+<title>LinkUp — Plan. Hang. Remember.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--or:#FF6B35;--orl:#FF9A6C;--ord:#E04E1A;--nv:#0F0F1A;--nvm:#181828;--sf:#FFF;--sfa:#F5F5F8;--tx:#0F0F1A;--txs:#6B6B80;--txm:#9B9BAF;--pl:#3498DB;--an:#F39C12;--lv:#2ECC71;--mm:#9B59B6}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{font-family:'DM Sans',sans-serif;color:var(--tx);background:var(--nv);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{
+  --orange:#FF6B35;
+  --orange-deep:#E8531F;
+  --orange-soft:#FFF0E9;
+  --ink:#1E1B2E;
+  --ink-60:#5A5670;
+  --grey:#8A8798;
+  --paper:#FAF7F2;
+  --card:#FFFFFF;
+  --line:#EFEAE2;
+  --plan:#4A90D9;   --plan-bg:#EAF2FB;
+  --soon:#F5A623;   --soon-bg:#FDF3E3;
+  --live:#2FBF71;   --live-bg:#E7F8EF;
+  --mem:#8F86AE;    --mem-bg:#F0EEF6;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --shadow:0 20px 60px -24px rgba(30,27,46,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Instrument Sans',system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque',sans-serif}
+::selection{background:var(--orange);color:#fff}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
-nav.scrolled{background:rgba(15,15,26,.92);backdrop-filter:blur(24px);padding:1rem 3rem}
-.nl{display:flex;align-items:center;gap:.6rem}
-.nl img{width:36px;height:36px;border-radius:9px}
-.nl span{font-weight:700;font-size:1.15rem;color:#fff;letter-spacing:-.01em}
-.nk{display:flex;gap:2.5rem;align-items:center}
-.nk a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .3s;letter-spacing:.02em}
-.nk a:hover{color:#fff}
-.nc{background:var(--or);color:#fff;border:none;padding:.6rem 1.6rem;border-radius:50px;font-weight:600;font-size:.85rem;cursor:pointer;transition:all .3s;font-family:inherit}
-.nc:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(255,107,53,.35)}
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px clamp(20px,5vw,64px);
+  background:rgba(250,247,242,.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-.02em}
+.brand-mark{
+  width:34px;height:34px;border-radius:10px;background:var(--orange);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;
+  box-shadow:0 6px 16px -6px rgba(255,107,53,.6);
+}
+.brand-mark svg{width:20px;height:20px}
+.foot-brand .brand-mark svg{width:15px;height:15px}
+.nav-cta{
+  font-weight:600;font-size:14px;color:#fff;background:var(--ink);
+  padding:10px 18px;border-radius:999px;text-decoration:none;
+  transition:transform .18s ease, background .18s ease;
+}
+.nav-cta:hover{background:var(--orange);transform:translateY(-1px)}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 6rem;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(255,107,53,.08) 0%,transparent 70%)}
-.hp{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.1);padding:.4rem 1rem .4rem .6rem;border-radius:50px;font-size:.78rem;font-weight:500;color:rgba(255,255,255,.6);margin-bottom:2.5rem;position:relative;z-index:2;animation:fu .7s ease both}
-.hpd{width:6px;height:6px;border-radius:50%;background:var(--or);animation:pu 2s infinite}
-@keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7.5vw,6rem);font-weight:800;line-height:1;letter-spacing:-.04em;color:#fff;max-width:850px;position:relative;z-index:2;animation:fu .7s ease .1s both}
-.hero h1 em{font-style:italic;color:var(--or)}
-.hs{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.4);max-width:480px;line-height:1.7;margin-top:1.8rem;font-weight:300;position:relative;z-index:2;animation:fu .7s ease .2s both}
-.ha{display:flex;gap:.8rem;margin-top:2.5rem;position:relative;z-index:2;animation:fu .7s ease .3s both;flex-wrap:wrap;justify-content:center}
-.bp{background:var(--or);color:#fff;border:none;padding:.85rem 2rem;border-radius:50px;font-weight:600;font-size:.95rem;cursor:pointer;transition:all .3s;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem}
-.bp:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(255,107,53,.3)}
-.bp svg{width:16px;height:16px}
-.bs{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12);padding:.85rem 2rem;border-radius:50px;font-weight:500;font-size:.95rem;cursor:pointer;transition:all .3s;font-family:inherit}
-.bs:hover{background:rgba(255,255,255,.06);color:#fff}
+/* ---------- hero ---------- */
+.hero{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,64px);
+  align-items:center;
+  padding:clamp(40px,7vh,90px) clamp(20px,5vw,64px) clamp(30px,6vh,70px);
+  max-width:1280px;margin:0 auto;position:relative;
+}
+.hero::before{
+  content:"";position:absolute;right:-10%;top:-20%;width:640px;height:640px;
+  background:radial-gradient(circle,rgba(255,107,53,.14),transparent 65%);
+  pointer-events:none;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--orange-deep);background:var(--orange-soft);
+  padding:7px 14px;border-radius:999px;margin-bottom:22px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.55}}
+.hero h1{
+  font-size:clamp(44px,6.2vw,84px);
+  font-weight:800;letter-spacing:-.03em;line-height:1.02;
+}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(24px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+.hero h1 .w:nth-child(1){animation-delay:.05s}
+.hero h1 .w:nth-child(2){animation-delay:.18s;color:var(--orange)}
+.hero h1 .w:nth-child(3){animation-delay:.31s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.hero p{
+  margin:22px 0 30px;font-size:clamp(16px,1.4vw,19px);color:var(--ink-60);max-width:46ch;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--orange);color:#fff;font-weight:700;font-size:16px;
+  padding:15px 28px;border-radius:999px;text-decoration:none;
+  box-shadow:0 14px 30px -10px rgba(255,107,53,.55);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 38px -10px rgba(255,107,53,.6)}
+.btn-ghost{font-weight:600;color:var(--ink);text-decoration:none;font-size:15px;border-bottom:2px solid var(--orange);padding-bottom:2px}
+.hero-note{margin-top:18px;font-size:13px;color:var(--grey)}
 
-/* iPHONE FRAME */
-.hero-device{margin-top:5rem;position:relative;z-index:2;animation:fu .9s ease .4s both}
-.iphone{width:280px;margin:0 auto;position:relative}
-.iphone-body{width:280px;height:572px;background:#1a1a1a;border-radius:44px;border:3px solid #2a2a2a;position:relative;box-shadow:0 60px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 0 0 2px #111,0 0 80px rgba(255,107,53,.06);overflow:hidden}
-/* Side buttons */
-.iphone-body::before{content:'';position:absolute;left:-4px;top:120px;width:3px;height:30px;background:#2a2a2a;border-radius:2px 0 0 2px}
-.iphone-body::after{content:'';position:absolute;right:-4px;top:140px;width:3px;height:50px;background:#2a2a2a;border-radius:0 2px 2px 0}
-/* Volume down */
-.vol-down{position:absolute;left:-4px;top:160px;width:3px;height:30px;background:#2a2a2a;border-radius:2px 0 0 2px}
-/* Dynamic island */
-.dynamic-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:90px;height:26px;background:#000;border-radius:20px;z-index:10}
-.iphone-screen{position:absolute;top:3px;left:3px;right:3px;bottom:3px;border-radius:41px;overflow:hidden;background:var(--sf)}
-/* Home indicator */
-.home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:120px;height:4px;background:rgba(0,0,0,.2);border-radius:4px;z-index:10}
+/* ---------- phone ---------- */
+.phone-wrap{display:flex;justify-content:center;position:relative}
+.phone{
+  width:min(340px,86vw);
+  background:#0E0C16;border-radius:48px;padding:12px;
+  box-shadow:var(--shadow),0 0 0 1px rgba(30,27,46,.08);
+  transform:rotate(1.5deg);
+  animation:float 7s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:rotate(1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-10px)}}
+.screen{
+  background:#F6F5F8;border-radius:38px;overflow:hidden;
+  display:flex;flex-direction:column;height:700px;position:relative;
+}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:26px;background:#0E0C16;border-radius:16px;z-index:5}
+.chat-head{
+  background:#fff;padding:44px 16px 12px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid #F0EEF3;
+}
+.avatar{width:38px;height:38px;border-radius:50%;flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(180deg,#FFD9A0 0%,#FF8A5C 60%,#C4457A 100%)}
+.avatar::before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#FFF3D6;right:6px;top:6px;box-shadow:0 0 8px 2px rgba(255,243,214,.8)}
+.avatar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;background:#2A2440}
+.avatar i{position:absolute;width:11px;height:11px;border-radius:50%;background:#2A2440}
+.avatar .h1{left:3px;bottom:6px}
+.avatar .h2{left:13px;bottom:9px;width:13px;height:13px}
+.avatar .h3{left:25px;bottom:6px}
+.chat-title{flex:1;min-width:0}
+.chat-title b{display:block;font-size:16px;letter-spacing:-.01em;line-height:1.2}
+.chat-title span{display:block;font-size:12px;color:var(--grey);line-height:1.2;margin-top:1px}
+.head-ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:var(--orange);font-size:16px}
 
-/* App UI inside phone */
-.app-header{background:var(--or);padding:3rem 1rem .8rem;color:#fff}
-.app-top{display:flex;justify-content:space-between;align-items:flex-start}
-.app-header h3{font-size:.95rem;font-weight:700}
-.app-header p{font-size:.6rem;opacity:.65;margin-top:.1rem}
-.app-badge{font-size:.5rem;background:rgba(255,255,255,.2);padding:.2rem .5rem;border-radius:20px;font-weight:600}
-.app-avatars{display:flex;margin-top:.6rem}
-.app-av{width:24px;height:24px;border-radius:50%;border:2px solid var(--or);margin-left:-5px;font-size:.45rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
-.app-av:first-child{margin-left:0}
-.app-tabs{display:flex;border-bottom:1px solid #eee}
-.app-tab{flex:1;padding:.5rem 0;text-align:center;font-size:.55rem;font-weight:600;color:var(--txm)}
-.app-tab.on{color:var(--or);border-bottom:2px solid var(--or)}
-.app-chat{flex:1;padding:.6rem;display:flex;flex-direction:column;gap:.4rem;overflow:hidden}
-.msg{max-width:78%;padding:.4rem .6rem;border-radius:10px;font-size:.52rem;line-height:1.45}
-.msg.them{background:var(--sfa);align-self:flex-start;border-bottom-left-radius:3px}
-.msg.me{background:var(--or);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
-.msg .nm{font-weight:700;font-size:.48rem;color:var(--or);margin-bottom:.1rem}
-.msg.me .nm{color:rgba(255,255,255,.8)}
-.msg .tm{font-size:.4rem;color:var(--txm);margin-top:.15rem;text-align:right}
-.msg.me .tm{color:rgba(255,255,255,.55)}
-.app-input{display:flex;gap:.3rem;padding:.5rem .6rem;border-top:1px solid #eee;align-items:center}
-.app-input-f{flex:1;background:var(--sfa);border-radius:20px;height:26px;padding:0 .6rem;font-size:.5rem;display:flex;align-items:center;color:var(--txm)}
-.app-send{width:26px;height:26px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.app-send svg{width:12px;height:12px}
+/* carousel */
+.carousel{background:#fff;border-bottom:1px solid #F0EEF3;overflow:hidden;position:relative}
+.track{display:flex;transition:transform .55s cubic-bezier(.3,.8,.3,1)}
+.ecard{min-width:100%;display:flex;gap:12px;align-items:center;padding:14px 16px 10px;position:relative}
+.ecard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bar)}
+.ecal{width:42px;height:42px;border-radius:12px;background:var(--tint);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.einfo{flex:1;min-width:0}
+.einfo b{display:block;font-size:15.5px;letter-spacing:-.01em;line-height:1.2}
+.einfo span{display:block;font-size:12.5px;color:var(--grey);line-height:1.25;margin-top:1px}
+.badge{
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;
+  color:var(--bc);background:var(--tint);white-space:nowrap;
+}
+.badge i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
+.badge.is-live i{animation:pulse 1.6s infinite}
+.dots{display:flex;gap:5px;justify-content:center;padding:0 0 10px;background:#fff}
+.dots b{width:6px;height:6px;border-radius:50%;background:#DAD6E0;transition:background .3s,transform .3s}
+.dots b.on{background:var(--orange);transform:scale(1.25)}
 
-/* Floating cards */
-.fc{position:absolute;background:#fff;border-radius:14px;padding:.7rem 1rem;box-shadow:0 12px 40px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.04);font-size:.7rem;font-weight:500;display:flex;align-items:center;gap:.5rem;animation:dr 5s ease-in-out infinite;z-index:3;white-space:nowrap}
-.fc .ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.f1{top:5%;left:-26%}.f2{top:40%;right:-28%}.f3{bottom:12%;left:-24%}
-.f1 .ic{background:rgba(52,152,219,.1);color:var(--pl)}
-.f2 .ic{background:rgba(46,204,113,.1);color:var(--lv)}
-.f3 .ic{background:rgba(155,89,182,.1);color:var(--mm)}
-@keyframes dr{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* messages */
+.msgs{flex:1;padding:14px 14px 8px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;overflow:hidden}
+.sysm{font-size:12px;color:#A6A2B4;font-style:italic;text-align:center;opacity:0;animation:fadeUp .5s ease forwards}
+.bubble{
+  max-width:78%;background:#fff;border-radius:16px;padding:9px 13px;font-size:13.5px;
+  box-shadow:0 3px 10px -6px rgba(30,27,46,.15);
+  opacity:0;animation:fadeUp .5s ease forwards;position:relative;
+}
+.bubble.me{align-self:flex-end;background:var(--orange);color:#fff}
+.bubble .t{display:block;font-size:10px;opacity:.6;text-align:right;margin-top:3px}
+.pic{
+  align-self:flex-end;width:64%;aspect-ratio:4/2.6;border-radius:16px;
+  background:linear-gradient(180deg,#FFE0A8 0%,#FF9A5C 42%,#E85D8A 68%,#8F4FA8 100%);
+  box-shadow:0 6px 16px -8px rgba(255,107,53,.5);
+  opacity:0;animation:fadeUp .5s ease forwards;position:relative;overflow:hidden;
+}
+.pic::before{content:"";position:absolute;width:26px;height:26px;border-radius:50%;background:#FFF6DD;left:18%;top:22%;box-shadow:0 0 18px 6px rgba(255,246,221,.75)}
+.pic::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:#241F38;clip-path:polygon(0 100%,0 55%,7% 55%,7% 28%,16% 28%,16% 58%,26% 58%,26% 18%,38% 18%,38% 48%,50% 48%,50% 33%,62% 33%,62% 62%,72% 62%,72% 22%,84% 22%,84% 52%,100% 52%,100% 100%)}
+.pic .tag{
+  position:absolute;left:8px;bottom:8px;font-size:9.5px;font-weight:700;color:#fff;
+  background:rgba(14,12,22,.55);backdrop-filter:blur(4px);
+  padding:4px 8px;border-radius:999px;display:flex;align-items:center;gap:4px;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.inbar{display:flex;gap:8px;align-items:center;padding:10px 12px 16px;background:#F6F5F8}
+.inbar .ic{width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:15px;box-shadow:0 2px 8px -4px rgba(30,27,46,.2)}
+.inbar .field{flex:1;background:#fff;border-radius:999px;padding:10px 16px;font-size:13px;color:#B4B0C0;box-shadow:0 2px 8px -4px rgba(30,27,46,.15)}
+.inbar .send{width:38px;height:38px;border-radius:50%;background:#B9B5C7;color:#fff;display:grid;place-items:center;font-size:15px}
 
-/* SECTIONS */
-section{padding:8rem 2rem}
-.ct{max-width:1080px;margin:0 auto}
-.lb{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--or);margin-bottom:1.2rem}
-.hdg{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.08;letter-spacing:-.03em}
-.stx{font-size:1.05rem;color:var(--txs);line-height:1.7;margin-top:1rem;max-width:500px;font-weight:300}
+/* ---------- lifecycle band ---------- */
+.band{
+  max-width:1280px;margin:0 auto;padding:clamp(30px,5vh,60px) clamp(20px,5vw,64px);
+}
+.band-head{text-align:center;max-width:640px;margin:0 auto 40px}
+.band-head h2{font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.band-head p{margin-top:14px;color:var(--ink-60);font-size:16.5px}
+.phases{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative;
+}
+.phases::before{
+  content:"";position:absolute;top:40px;left:8%;right:8%;height:3px;border-radius:2px;
+  background:linear-gradient(90deg,#4A90D9,#F5A623,#2FBF71,#8F86AE);opacity:.28;
+  z-index:0;
+}
+.phase{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:22px 18px;position:relative;z-index:1;overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.phase::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--pc),transparent 160%)}
+.phase:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.phase .pip{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+  font-size:21px;margin-bottom:14px;background:var(--pb);color:var(--pc);
+  transition:transform .25s cubic-bezier(.3,1.4,.5,1);
+}
+.phase:hover .pip{transform:scale(1.1) rotate(-5deg)}
+.mini-ev{margin-top:16px;display:flex;align-items:center;gap:7px;background:#FBFAF7;border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:11px;font-weight:700;letter-spacing:-.01em}
+.mini-ev .dotc{width:22px;height:22px;border-radius:7px;background:var(--pb);display:grid;place-items:center;font-size:11px;flex-shrink:0}
+.mini-ev .mbadge{margin-left:auto;font-size:8.5px;font-weight:800;letter-spacing:.05em;color:var(--pc);background:var(--pb);padding:3px 7px;border-radius:999px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.mini-ev .mbadge i{width:4px;height:4px;border-radius:50%;background:currentColor;font-style:normal}
+.mini-ev .mbadge.lv i{animation:pulse 1.6s infinite}
+.phase h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.phase small{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--pc);margin-bottom:6px}
+.phase p{font-size:13.5px;color:var(--ink-60);margin-top:8px;line-height:1.5}
 
-/* HOW IT WORKS - Timeline */
-.how{background:var(--sf)}
-.how .ct{text-align:center}
-.how .stx{margin-left:auto;margin-right:auto}
-.timeline{position:relative;max-width:700px;margin:5rem auto 0;padding-left:40px}
-.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--pl),var(--an),var(--lv),var(--mm));opacity:.2;transition:opacity .6s}
-.timeline.active::before{opacity:1}
-.tl-item{position:relative;padding:0 0 3.5rem 2.5rem;text-align:left;opacity:0;transform:translateX(-20px);transition:all .7s cubic-bezier(.16,1,.3,1)}
-.tl-item.vis{opacity:1;transform:translateX(0)}
-.tl-dot{position:absolute;left:-33px;top:4px;width:16px;height:16px;border-radius:50%;border:3px solid;background:var(--sf);transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1) .2s;z-index:2}
-.tl-item.vis .tl-dot{transform:scale(1)}
-.tl-item:nth-child(1) .tl-dot{border-color:var(--pl)}
-.tl-item:nth-child(2) .tl-dot{border-color:var(--an)}
-.tl-item:nth-child(3) .tl-dot{border-color:var(--lv)}
-.tl-item:nth-child(4) .tl-dot{border-color:var(--mm)}
-.tl-step{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.4rem}
-.tl-item:nth-child(1) .tl-step{color:var(--pl)}
-.tl-item:nth-child(2) .tl-step{color:var(--an)}
-.tl-item:nth-child(3) .tl-step{color:var(--lv)}
-.tl-item:nth-child(4) .tl-step{color:var(--mm)}
-.tl-item h4{font-size:1.25rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.02em}
-.tl-item p{font-size:.9rem;color:var(--txs);line-height:1.65;max-width:500px}
-.tl-icon{position:absolute;right:0;top:0;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.7);transition:all .5s cubic-bezier(.34,1.56,.64,1) .4s}
-.tl-item.vis .tl-icon{opacity:1;transform:scale(1)}
-.tl-item:nth-child(1) .tl-icon{background:rgba(52,152,219,.08);color:var(--pl)}
-.tl-item:nth-child(2) .tl-icon{background:rgba(243,156,18,.08);color:var(--an)}
-.tl-item:nth-child(3) .tl-icon{background:rgba(46,204,113,.08);color:var(--lv)}
-.tl-item:nth-child(4) .tl-icon{background:rgba(155,89,182,.08);color:var(--mm)}
+/* ---------- features ---------- */
+.feat{
+  max-width:1280px;margin:0 auto;
+  padding:clamp(36px,6vh,80px) clamp(20px,5vw,64px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:center;
+}
+.feat.rev .feat-copy{order:2}
+.feat-copy .kicker{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-deep);margin-bottom:14px;display:block}
+.feat-copy h2{font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-.025em;line-height:1.12}
+.feat-copy p{margin-top:16px;color:var(--ink-60);font-size:16px;max-width:44ch}
+.feat-copy ul{margin-top:18px;list-style:none;display:flex;flex-direction:column;gap:10px}
+.feat-copy li{display:flex;gap:10px;font-size:14.5px;color:var(--ink)}
+.feat-copy li::before{content:"→";color:var(--orange);font-weight:700}
 
-/* FEATURES */
-.feat-sec{background:var(--nvm);color:#fff;position:relative;overflow:hidden}
-.feat-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,53,.2),transparent)}
-.feat-sec .stx{color:rgba(255,255,255,.35)}
-.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:4rem;max-width:960px}
-.ft{padding:2.5rem 2rem;transition:all .5s;position:relative;border:1px solid rgba(255,255,255,.04);opacity:0;transform:translateY(30px)}
-.ft.vis{opacity:1;transform:translateY(0)}
-.ft:hover{background:rgba(255,107,53,.04);border-color:rgba(255,107,53,.12)}
-.ft:hover .fi{transform:scale(1.1) rotate(-3deg);background:rgba(255,107,53,.15)}
-.fi{width:44px;height:44px;border-radius:12px;background:rgba(255,107,53,.08);display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;color:var(--orl);transition:all .4s cubic-bezier(.34,1.56,.64,1)}
-.fi svg{width:20px;height:20px}
-.ft h4{font-size:1.05rem;font-weight:600;margin-bottom:.45rem}
-.ft p{font-size:.85rem;color:rgba(255,255,255,.35);line-height:1.65}
+.demo-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:26px;box-shadow:var(--shadow);
+}
 
-/* REVIEWS */
-.soc{background:var(--sf)}
-.soc .ct{text-align:center}
-.soc .stx{margin-left:auto;margin-right:auto}
-.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem}
-.tc{background:var(--sfa);border-radius:16px;padding:2rem;text-align:left;transition:all .35s;opacity:0;transform:translateY(20px)}
-.tc.vis{opacity:1;transform:translateY(0)}
-.tc:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(0,0,0,.04)}
-.ts2{color:var(--or);font-size:.8rem;letter-spacing:2px;margin-bottom:.8rem}
-.tc blockquote{font-size:.9rem;line-height:1.65;color:var(--tx);font-style:italic;margin-bottom:1.2rem;font-weight:300}
-.tw{display:flex;align-items:center;gap:.6rem}
-.tav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.6rem;color:#fff}
-.tn{font-weight:600;font-size:.8rem}
-.tr{font-size:.7rem;color:var(--txm)}
+/* rsvp demo */
+.rsvp-title{font-size:13px;font-weight:700;letter-spacing:.07em;color:var(--grey);text-transform:uppercase;margin-bottom:16px}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{
+  flex:1;min-width:90px;text-align:center;
+  border:2px solid var(--orange);color:var(--orange);background:#fff;
+  font-weight:700;font-size:15px;font-family:'Instrument Sans';
+  padding:12px 10px;border-radius:999px;cursor:pointer;
+  transition:all .2s cubic-bezier(.3,1.4,.5,1);
+}
+.pill.sel{background:var(--orange);color:#fff;transform:scale(1.04);box-shadow:0 10px 22px -8px rgba(255,107,53,.55)}
+.pill:active{transform:scale(.95)}
+.who{margin-top:24px}
+.who-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.who-label{font-size:13px;font-weight:600;width:70px}
+.who-label.g{color:var(--live)} .who-label.m{color:var(--soon)}
+.faces{display:flex}
+.face{
+  width:34px;height:34px;border-radius:50%;border:2.5px solid #fff;
+  display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;
+  margin-left:-8px;position:relative;
+}
+.face:first-child{margin-left:0}
+.face.you{background:linear-gradient(135deg,#FF8A5C,#E8531F)}
+.face.b{background:linear-gradient(135deg,#7BB6F0,#3D7FC4)}
+.face.c{background:linear-gradient(135deg,#66D9A3,#2A9D66)}
+.face.d{background:linear-gradient(135deg,#B9A8E8,#7C63C4)}
+.crown{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:10px}
+.count-note{font-size:12.5px;color:var(--grey);margin-left:auto}
 
-/* CTA */
-.cta{background:var(--nv);text-align:center;padding:9rem 2rem;position:relative;overflow:hidden}
-.cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(255,107,53,.1),transparent 70%);pointer-events:none}
-.cta h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.03em;position:relative;z-index:2}
-.cta h2 em{font-style:italic;color:var(--or)}
-.cta>p{color:rgba(255,255,255,.35);font-size:1.05rem;margin-top:1rem;font-weight:300;position:relative;z-index:2}
-.cb{display:flex;gap:.8rem;justify-content:center;margin-top:2.5rem;position:relative;z-index:2;flex-wrap:wrap}
-.sb{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:.7rem 1.3rem;border-radius:12px;color:#fff;text-decoration:none;transition:all .3s}
-.sb:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
-.sb svg{width:22px;height:22px}
-.sbt{text-align:left}
-.sbt small{font-size:.55rem;opacity:.5;display:block}
-.sbt span{font-weight:600;font-size:.85rem}
+/* photos demo */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.ptile{
+  aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-size:26px;
+  position:relative;overflow:hidden;cursor:default;
+  transition:transform .2s ease;
+}
+.ptile:hover{transform:scale(1.05)}
+.ptile::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.3),transparent 60%)}
+.ptile.a{background:linear-gradient(135deg,#FFC098,#FF6B35)}
+.ptile.b{background:linear-gradient(135deg,#8FD3F4,#4A90D9)}
+.ptile.c{background:linear-gradient(135deg,#FFE29A,#F5A623)}
+.ptile.d{background:linear-gradient(135deg,#A8E6C9,#2FBF71)}
+.ptile.e{background:linear-gradient(135deg,#D5C8F5,#8F86AE)}
+.ptile.f{background:linear-gradient(135deg,#FFA8A8,#E85D5D)}
+.ev-chip{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+  background:var(--soon-bg);color:#B47708;font-weight:700;font-size:13px;
+  padding:8px 14px;border-radius:999px;
+}
+.photo-note{margin-top:14px;font-size:13px;color:var(--grey);display:flex;align-items:center;gap:8px}
+.photo-note b{color:var(--orange-deep)}
 
-/* FOOTER */
-footer{background:var(--nv);border-top:1px solid rgba(255,255,255,.05);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.fb{display:flex;align-items:center;gap:.4rem}
-.fb img{width:24px;height:24px;border-radius:6px}
-.fb span{color:rgba(255,255,255,.6);font-weight:600;font-size:.85rem}
-.fl{display:flex;gap:1.5rem}
-.fl a{color:rgba(255,255,255,.3);text-decoration:none;font-size:.75rem;transition:color .3s}
-.fl a:hover{color:rgba(255,255,255,.6)}
+/* roster demo */
+.member{display:flex;align-items:center;gap:13px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.member:last-child{border-bottom:0}
+.m-av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
+.m-info{flex:1}
+.m-info b{display:block;font-size:15px}
+.rolebadge{
+  display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.06em;
+  padding:3px 8px;border-radius:999px;margin-top:3px;
+}
+.rolebadge.host{background:var(--orange);color:#fff}
+.rolebadge.co{border:1.5px solid var(--orange);color:var(--orange)}
+.chev{color:#C9C5D4;font-size:18px}
+.invite-strip{
+  margin-top:16px;display:flex;align-items:center;gap:12px;
+  background:var(--orange-soft);border-radius:var(--r-sm);padding:14px 16px;
+}
+.invite-strip .ic{width:36px;height:36px;border-radius:10px;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.invite-strip p{font-size:13px;color:var(--ink-60)}
+.invite-strip b{color:var(--ink)}
 
-@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* ---------- memories ---------- */
+.mem{
+  background:var(--ink);color:#fff;
+  margin-top:clamp(30px,6vh,70px);
+  padding:clamp(56px,9vh,110px) clamp(20px,5vw,64px) clamp(64px,10vh,120px);
+  position:relative;overflow:hidden;
+}
+.mem::before{
+  content:"";position:absolute;left:-15%;bottom:-40%;width:700px;height:700px;
+  background:radial-gradient(circle,rgba(255,107,53,.22),transparent 60%);
+}
+.mem::after{
+  content:"";position:absolute;right:-10%;top:-30%;width:520px;height:520px;
+  background:radial-gradient(circle,rgba(143,134,174,.18),transparent 60%);
+}
+.mem-head{max-width:1280px;margin:0 auto 46px;position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,60px);align-items:end}
+.mem h2{font-size:clamp(30px,3.6vw,50px);font-weight:800;letter-spacing:-.025em;line-height:1.08}
+.mem h2 span{color:var(--orange)}
+.mem-head p{margin-top:18px;color:#B9B4CC;font-size:16.5px;max-width:46ch}
+.mem-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(143,134,174,.22);color:#CDC7E4;font-weight:700;font-size:12px;
+  letter-spacing:.07em;padding:7px 14px;border-radius:999px;margin-bottom:20px;
+}
+.mem-quote{
+  font-family:'Bricolage Grotesque';font-size:15.5px;color:#CDC7E4;
+  border-left:3px solid var(--orange);padding-left:16px;line-height:1.6;
+  justify-self:end;max-width:34ch;
+}
+.mem-quote b{color:#fff;display:block;margin-top:8px;font-size:13px;font-weight:600}
 
-@media(max-width:900px){.fg{grid-template-columns:1fr}.tg{grid-template-columns:1fr}.fc{display:none}nav{padding:1rem 1.5rem}.tl-icon{display:none}}
-@media(max-width:600px){.nk a:not(.nc){display:none}.hero{padding:8rem 1.2rem 4rem}section{padding:5rem 1.2rem}.iphone,.iphone-body{width:240px;height:490px}footer{padding:2rem 1.5rem}}
+.mem-inner{max-width:1280px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr .62fr;gap:clamp(20px,3vw,40px);align-items:stretch}
+
+/* the opened memory card */
+.memory-card{
+  background:linear-gradient(160deg,#26223A,#1B1830 60%);
+  border:1px solid rgba(143,134,174,.28);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+  display:flex;flex-direction:column;
+}
+.memory-cover{
+  position:relative;height:200px;
+  background:linear-gradient(160deg,#FF9A5C 0%,#E85D8A 45%,#6B3FA0 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:18px 22px;overflow:hidden;
+}
+.memory-cover::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 25% 20%,rgba(255,255,255,.28),transparent 55%);
+}
+.memory-cover::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:110px;
+  background:linear-gradient(to top,rgba(27,24,48,.9),transparent);
+}
+.bokeh{position:absolute;border-radius:50%;filter:blur(6px)}
+.bk1{width:46px;height:46px;background:#FFE3A8;left:64%;top:12%;opacity:.55}
+.bk2{width:26px;height:26px;background:#FFD1E8;left:82%;top:38%;opacity:.45}
+.bk3{width:34px;height:34px;background:#FFF;left:12%;top:16%;opacity:.35}
+.bk4{width:20px;height:20px;background:#FFB88C;left:38%;top:8%;opacity:.5}
+.memory-cover .stars{position:absolute;inset:0;pointer-events:none}
+.memory-cover .st{position:absolute;font-size:13px;opacity:0;animation:twinkle 3.6s ease-in-out infinite;color:#fff}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.9;transform:scale(1)}}
+.memory-title{position:relative;z-index:2}
+.tk{font-style:normal;color:#5BD1FF;font-weight:700;letter-spacing:-1px}
+.wc-cell .face{font-size:21px}
+.wc-cell.pop{animation:popIn .4s cubic-bezier(.3,1.5,.5,1)}
+@keyframes popIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.memory-title .mb{
+  display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.08em;
+  background:rgba(143,134,174,.35);backdrop-filter:blur(6px);color:#E7E3F5;
+  padding:4px 10px;border-radius:999px;margin-bottom:8px;
+}
+.memory-title h3{font-size:24px;font-weight:800;letter-spacing:-.02em;color:#fff}
+.memory-title span{font-size:12.5px;color:#CFC9E2}
+.memory-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:18px;flex:1}
+.memory-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ms-tile{
+  aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-size:24px;
+  position:relative;overflow:hidden;
+  transition:transform .22s ease;cursor:default;
+}
+.ms-tile:hover{transform:scale(1.05)}
+.mst1{background:linear-gradient(180deg,#FFD9A0,#FF8A5C 55%,#8F4FA8)}
+.mst1::before{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#FFF3D6;left:20%;top:20%;box-shadow:0 0 10px 3px rgba(255,243,214,.8)}
+.mst1::after{content:"";position:absolute;left:0;right:0;bottom:0;height:36%;background:#241F38;clip-path:polygon(0 100%,0 55%,12% 55%,12% 25%,26% 25%,26% 60%,42% 60%,42% 15%,58% 15%,58% 45%,72% 45%,72% 62%,86% 62%,86% 30%,100% 30%,100% 100%)}
+.mst2{background:linear-gradient(200deg,#6B3FA0,#31215C)}
+.mst2::before{content:"";position:absolute;inset:0;filter:blur(1px);background:
+  radial-gradient(circle at 22% 28%,rgba(255,227,168,.9) 0 3px,transparent 6px),
+  radial-gradient(circle at 68% 18%,rgba(255,255,255,.9) 0 2.5px,transparent 6px),
+  radial-gradient(circle at 82% 55%,rgba(255,209,232,.8) 0 3.5px,transparent 7px),
+  radial-gradient(circle at 40% 58%,rgba(255,255,255,.6) 0 2px,transparent 5px),
+  radial-gradient(circle at 55% 38%,rgba(255,227,168,.7) 0 4px,transparent 8px)}
+.mst2::after{content:"";position:absolute;bottom:-8px;left:10%;width:22px;height:22px;border-radius:50%;background:#1B1430;box-shadow:26px 4px 0 1px #1B1430,50px -1px 0 3px #1B1430,76px 5px 0 0 #1B1430}
+.mst3{background:linear-gradient(145deg,#FFE9B8,#F5A623 60%,#C46A10)}
+.mst3::before{content:"";position:absolute;width:60%;height:32%;left:20%;bottom:16%;background:#FFF7EC;border-radius:8px 8px 10px 10px;box-shadow:inset 0 -7px 0 #F2C879}
+.mst3::after{content:"";position:absolute;left:39%;bottom:46%;width:3px;height:9px;border-radius:2px;background:#E85D5D;box-shadow:9px 0 0 #5BABE8,18px 0 0 #66C98F}
+.ms-tile.more{background:rgba(143,134,174,.22);color:#CFC9E2;font-size:14px;font-weight:700;font-family:'Instrument Sans'}
+.memory-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.memory-faces{display:flex}
+.memory-faces .face{border-color:#221E36;width:32px;height:32px;font-size:11px}
+.memory-meta .who-came{font-size:13px;color:#B9B4CC}
+.memory-meta .who-came b{color:#fff}
+.memory-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto;
+}
+.mstat{
+  background:rgba(143,134,174,.13);border:1px solid rgba(143,134,174,.2);
+  border-radius:var(--r-sm);padding:12px 10px;text-align:center;
+}
+.mstat b{display:block;font-family:'Bricolage Grotesque';font-size:22px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.mstat span{font-size:11px;color:#A79FC4;font-weight:600;letter-spacing:.04em}
+
+/* the shelf of past memories */
+.mem-shelf{display:flex;flex-direction:column;gap:12px}
+.shelf-label{font-size:11.5px;font-weight:800;letter-spacing:.1em;color:#8F86AE;margin-bottom:2px}
+.shelf-item{
+  display:flex;align-items:center;gap:14px;
+  background:rgba(143,134,174,.1);border:1px solid rgba(143,134,174,.18);
+  border-radius:var(--r-md);padding:13px 15px;cursor:pointer;
+  transition:transform .22s ease,background .22s ease,border-color .22s ease;
+}
+.shelf-item:hover{transform:translateX(6px);background:rgba(255,107,53,.12);border-color:rgba(255,107,53,.4)}
+.shelf-thumb{
+  width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:24px;flex-shrink:0;
+  position:relative;overflow:hidden;
+}
+.shelf-thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.3),transparent 60%)}
+.shelf-info{flex:1;min-width:0}
+.shelf-info b{display:block;font-size:14.5px;color:#fff;letter-spacing:-.01em}
+.shelf-info span{font-size:12px;color:#A79FC4}
+.shelf-count{font-size:11px;font-weight:700;color:#CFC9E2;background:rgba(143,134,174,.25);padding:4px 9px;border-radius:999px;white-space:nowrap}
+.shelf-cta{
+  margin-top:4px;text-align:center;font-size:13px;font-weight:600;color:#8F86AE;
+  padding:12px;border:1.5px dashed rgba(143,134,174,.35);border-radius:var(--r-md);
+}
+.shelf-cta b{color:var(--orange)}
+
+/* ---------- cta ---------- */
+.cta{
+  max-width:900px;margin:0 auto;text-align:center;
+  padding:clamp(60px,10vh,120px) clamp(20px,5vw,64px);
+}
+.cta h2{font-size:clamp(32px,4.4vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.cta h2 em{font-style:normal;color:var(--orange)}
+.cta p{margin:20px auto 34px;color:var(--ink-60);font-size:17px;max-width:48ch}
+footer{
+  border-top:1px solid var(--line);
+  padding:26px clamp(20px,5vw,64px);
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-size:13px;color:var(--grey);
+}
+.foot-brand{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--ink);font-family:'Bricolage Grotesque'}
+.foot-brand .brand-mark{width:26px;height:26px;border-radius:8px;font-size:12px}
+
+/* ---------- app-faithful UI (matches LinkUp's real screens) ---------- */
+.screen,.demo-card{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif}
+.demo-card h3{font-family:inherit}
+.head-ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.inbar .ic svg{width:17px;height:17px;fill:none;stroke:var(--orange);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.inbar .send svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ecal svg{width:22px;height:22px;color:var(--bc)}
+.ptime{position:absolute;right:10px;bottom:9px;font-size:10px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.45);z-index:1}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.05em;color:#B47708;background:var(--soon-bg);padding:6px 12px;border-radius:999px;margin-bottom:12px}
+.status-pill i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
+.ed-title{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.ed-starts{display:block;font-size:11px;font-weight:700;letter-spacing:.09em;color:var(--grey);margin-bottom:6px}
+.datechip{display:inline-flex;align-items:center;gap:8px;background:#F4F2F7;border:1px solid #E9E6EF;border-radius:12px;padding:9px 14px;font-size:14px;font-weight:600;margin-bottom:18px}
+.datechip svg{width:15px;height:15px;fill:none;stroke:var(--ink-60);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.datechip i{font-style:normal;color:#C9C5D4}
+.datechip b{color:var(--orange-deep)}
+.wc-h{font-size:16.5px;font-weight:800;margin-bottom:2px}
+.facewrap{position:relative;display:inline-flex;margin-left:-8px}
+.facewrap:first-child{margin-left:0}
+.facewrap .face{margin-left:0}
+.fbadge{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-size:7px;font-weight:800;letter-spacing:.03em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:999px;border:1.5px solid #fff;white-space:nowrap}
+.fbadge.co{background:#fff;color:var(--orange);border:1.5px solid var(--orange)}
+.sec-label{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--grey);margin:0 0 6px}
+.tabbar{display:flex;gap:26px;border-bottom:1.5px solid var(--line);margin-bottom:14px}
+.tab{font-size:14.5px;font-weight:700;color:var(--grey);padding:2px 2px 10px;position:relative}
+.tab.on{color:var(--orange)}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1.5px;height:2.5px;background:var(--orange);border-radius:2px}
+.addphoto{width:100%;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--orange);color:#fff;font-weight:700;font-size:15px;font-family:inherit;border:0;padding:14px;border-radius:999px;cursor:pointer;transition:transform .15s ease}
+.addphoto:active{transform:scale(.97)}
+.addphoto svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cover-emoji{font-size:54px;line-height:1;transform:translateY(8px)}
+.sbar{position:absolute;top:13px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 24px;font-size:12.5px;font-weight:700;color:var(--ink);z-index:4}
+.back{display:grid;place-items:center;color:var(--ink);margin-right:2px}
+.back svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.bubble .name{display:block;font-size:11.5px;font-weight:700;color:var(--orange-deep);margin-bottom:2px}
+.bubble .name.c2{color:#3D7FC4}
+.bubble .t.tl{text-align:left}
+.me-media{display:flex;align-items:flex-end;gap:6px;align-self:flex-end;width:60%;opacity:0;animation:fadeUp .5s ease forwards}
+.me-media .pic{width:100%;opacity:1;animation:none;align-self:auto}
+.mini-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#FF8A5C,#E8531F)}
+.mini-av.ghost{visibility:hidden}
+.pic.p2{background:linear-gradient(180deg,#241B45 0%,#5A3A8C 55%,#C4457A 100%)}
+.pic.p2::before{width:18px;height:18px;left:auto;right:16%;top:16%;background:#FFF;box-shadow:0 0 14px 4px rgba(255,255,255,.6)}
+.mapc{position:relative;width:100%;aspect-ratio:4/2.6;border-radius:16px;overflow:hidden;background:#1B2340;box-shadow:0 6px 16px -8px rgba(27,35,64,.55)}
+.mapsvg{position:absolute;inset:0;width:100%;height:100%}
+.maplabel{position:absolute;left:10px;top:10px;font-size:9.5px;font-weight:700;color:#1B2340;background:#fff;padding:4px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.mapchip{position:absolute;left:10px;bottom:9px;font-size:9.5px;font-weight:700;color:#fff;background:#2E3A5C;padding:4px 9px;border-radius:999px}
+.wc-sec{font-size:14px;font-weight:800;margin-top:14px}
+.wc-sec.g{color:#1E9459}
+.wc-sec.m{color:#B47708}
+.wc-grid{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.wc-cell{position:relative;display:flex;flex-direction:column;align-items:center;width:58px}
+.wc-cell .face{width:46px;height:46px;font-size:13px;margin-left:0}
+.wc-cell .fbadge{top:37px;bottom:auto}
+.wc-name{font-size:11.5px;font-weight:600;margin-top:9px}
+.role-sub{display:block;font-size:12px;font-weight:600;color:var(--orange-deep);margin-top:1px}
+.invite-strip p{flex:1}
+.invite-btn{background:var(--orange);color:#fff;font-weight:700;font-size:13px;padding:9px 16px;border-radius:999px;border:0;white-space:nowrap;font-family:inherit;cursor:pointer}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rv{opacity:1;transform:none}
+  .bubble,.sysm,.pic,.me-media{opacity:1}
+  .hero h1 .w{opacity:1;transform:none}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero p{margin-inline:auto}
+  .hero-ctas{justify-content:center}
+  .phases{grid-template-columns:1fr 1fr}
+  .phases::before{display:none}
+  .feat{grid-template-columns:1fr}
+  .feat.rev .feat-copy{order:0}
+  .mem-head{grid-template-columns:1fr}
+  .mem-quote{justify-self:start;margin-top:6px}
+  .mem-inner{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .phases{grid-template-columns:1fr}
+  .screen{height:640px}
+}
 </style>
 </head>
 <body>
-<nav id="nav">
-<div class="nl"><img src="data:image/jpeg;base64,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" alt="LinkUp"><span>LinkUp</span></div>
-<div class="nk"><a href="#how">How it works</a><a href="#features">Features</a><a href="#reviews">Reviews</a><button class="nc" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get the app</button></div>
+
+<nav>
+  <div class="brand"><span class="brand-mark"><svg viewBox="0 0 26 26" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M5.5 2.5H11.5A3.5 3.5 0 0 1 15 6V10A3.5 3.5 0 0 1 11.5 13.5H8.8L5.5 16.9V13.5A3.5 3.5 0 0 1 2 10V6A3.5 3.5 0 0 1 5.5 2.5Z"/><path d="M14.5 9.5H20.5A3.5 3.5 0 0 1 24 13V17A3.5 3.5 0 0 1 20.5 20.5L21.6 23.9 18 20.5H14.5A3.5 3.5 0 0 1 11 17V13A3.5 3.5 0 0 1 14.5 9.5Z" stroke="var(--orange)" stroke-width="5.2"/><path d="M14.5 9.5H20.5A3.5 3.5 0 0 1 24 13V17A3.5 3.5 0 0 1 20.5 20.5L21.6 23.9 18 20.5H14.5A3.5 3.5 0 0 1 11 17V13A3.5 3.5 0 0 1 14.5 9.5Z"/></svg></span> LinkUp</div>
+  <a class="nav-cta" href="#join">Join the beta</a>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-<div class="hp"><span class="hpd"></span> Now on iOS &amp; Android</div>
-<h1>Your plans deserve<br>more than a <em>group chat</em></h1>
-<p class="hs">LinkUp turns every plan into a structured event space with messaging, photos, checklists, and live location sharing.</p>
-<div class="ha">
-<button class="bp" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Download free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
-<button class="bs" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See how it works</button>
-</div>
+  <div>
+    <span class="eyebrow"><span class="dot"></span> Now in TestFlight beta</span>
+    <h1><span class="w">Plan.</span> <span class="w">Hang.</span> <span class="w">Remember.</span></h1>
+    <p>LinkUp turns your group chat into a place where plans actually happen. Every event gets its own card, its own RSVPs, its own photos — and when it's over, it becomes a memory your group keeps.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#join">Get early access</a>
+      <a class="btn-ghost" href="#lifecycle">See how it works</a>
+    </div>
+    <p class="hero-note">Free on iOS · Built for friend groups, not followers</p>
+  </div>
 
-<div class="hero-device"><div style="position:relative;display:inline-block">
-<div class="fc f1"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-weight:600;font-size:.72rem">Saturday dinner</div><div style="font-size:.58rem;color:var(--txm)">5 friends going</div></div></div>
-<div class="fc f2"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg></div><div><div style="font-weight:600;font-size:.72rem">Live now</div><div style="font-size:.58rem;color:var(--lv)">At Dishoom, Shoreditch</div></div></div>
-<div class="fc f3"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div><div style="font-weight:600;font-size:.72rem">24 photos saved</div><div style="font-size:.58rem;color:var(--mm)">Birthday memories</div></div></div>
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="screen">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><svg width="48" height="12" viewBox="0 0 48 12" fill="currentColor"><rect y="6" width="2.6" height="6" rx="1"/><rect x="4" y="4" width="2.6" height="8" rx="1"/><rect x="8" y="2" width="2.6" height="10" rx="1"/><rect x="12" width="2.6" height="12" rx="1"/><path d="M21.5 5a7.5 7.5 0 0 1 9.6 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M23.8 7.8a4 4 0 0 1 5 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="26.3" cy="10.6" r="1.2"/><rect x="34" y="1.5" width="10.5" height="9" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="35.6" y="3.1" width="5.6" height="5.8" rx="1.3"/><rect x="45.4" y="4.2" width="1.6" height="3.6" rx=".8"/></svg></div>
+        <div class="chat-head">
+          <div class="back"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></div>
+          <div class="avatar"><i class="h1"></i><i class="h2"></i><i class="h3"></i></div>
+          <div class="chat-title"><b>Saturday Crew</b><span>5 members</span></div>
+          <div class="head-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M12 14v6M9 17h6"/></svg></div>
+          <div class="head-ic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .8 2.9a2 2 0 0 1-.5 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.9.7 2.9.8a2 2 0 0 1 1.6 2z"/></svg></div>
+        </div>
 
-<div class="iphone">
-<div class="iphone-body">
-<div class="vol-down"></div>
-<div class="dynamic-island"></div>
-<div class="iphone-screen" style="display:flex;flex-direction:column">
-<div class="app-header"><div class="app-top"><div><h3>Ibiza Trip 2026</h3><p>6 members</p></div><span class="app-badge">Planning</span></div><div class="app-avatars"><div class="app-av" style="background:#E74C3C">JK</div><div class="app-av" style="background:#3498DB">AR</div><div class="app-av" style="background:#2ECC71">TS</div><div class="app-av" style="background:#9B59B6">MH</div><div class="app-av" style="background:#F39C12">+2</div></div></div>
-<div class="app-tabs"><div class="app-tab on">Chat</div><div class="app-tab">Photos</div><div class="app-tab">Location</div></div>
-<div class="app-chat">
-<div class="msg them"><div class="nm">Alex</div>Found flights for 89 return. Should I book for everyone?<div class="tm">14:32</div></div>
-<div class="msg me">Yesss book it! I will sort the villa<div class="tm">14:33</div></div>
-<div class="msg them"><div class="nm">Tash</div>Added the packing list btw<div class="tm">14:35</div></div>
-<div class="msg me">This is way better than WhatsApp lol<div class="tm">14:36</div></div>
-</div>
-<div class="app-input"><div class="app-input-f">Type a message...</div><div class="app-send"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div></div>
-<div class="home-ind"></div>
-</div>
-</div>
-</div>
-</div></div>
+        <div class="carousel">
+          <div class="track" id="track">
+            <div class="ecard" style="--bar:var(--live);--tint:var(--live-bg);--bc:#1E9459">
+              <div class="ecal"><svg viewBox="0 0 24 24"><path d="M8 2v3.5M16 2v3.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><rect x="3" y="4.5" width="18" height="17" rx="3.5" fill="currentColor"/><rect x="3" y="8.6" width="18" height="1.6" fill="#fff" opacity=".95"/><g fill="#fff"><circle cx="8.3" cy="13.6" r="1.2"/><circle cx="12" cy="13.6" r="1.2"/><circle cx="15.7" cy="13.6" r="1.2"/><circle cx="8.3" cy="17.2" r="1.2"/><circle cx="12" cy="17.2" r="1.2"/></g></svg></div>
+              <div class="einfo"><b>Rooftop drinks</b><span>Today at 18:00</span></div>
+              <span class="badge is-live"><i></i>LIVE NOW</span>
+            </div>
+            <div class="ecard" style="--bar:var(--soon);--tint:var(--soon-bg);--bc:#B47708">
+              <div class="ecal"><svg viewBox="0 0 24 24"><path d="M8 2v3.5M16 2v3.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><rect x="3" y="4.5" width="18" height="17" rx="3.5" fill="currentColor"/><rect x="3" y="8.6" width="18" height="1.6" fill="#fff" opacity=".95"/><g fill="#fff"><circle cx="8.3" cy="13.6" r="1.2"/><circle cx="12" cy="13.6" r="1.2"/><circle cx="15.7" cy="13.6" r="1.2"/><circle cx="8.3" cy="17.2" r="1.2"/><circle cx="12" cy="17.2" r="1.2"/></g></svg></div>
+              <div class="einfo"><b>Pizza night</b><span>Fri 6 Jun at 19:30</span></div>
+              <span class="badge"><i></i>COMING UP</span>
+            </div>
+            <div class="ecard" style="--bar:var(--plan);--tint:var(--plan-bg);--bc:#2F6BA8">
+              <div class="ecal"><svg viewBox="0 0 24 24"><path d="M8 2v3.5M16 2v3.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/><rect x="3" y="4.5" width="18" height="17" rx="3.5" fill="currentColor"/><rect x="3" y="8.6" width="18" height="1.6" fill="#fff" opacity=".95"/><g fill="#fff"><circle cx="8.3" cy="13.6" r="1.2"/><circle cx="12" cy="13.6" r="1.2"/><circle cx="15.7" cy="13.6" r="1.2"/><circle cx="8.3" cy="17.2" r="1.2"/><circle cx="12" cy="17.2" r="1.2"/></g></svg></div>
+              <div class="einfo"><b>Peak District trip</b><span>Sat 20 Jun · all day</span></div>
+              <span class="badge"><i></i>PLANNING</span>
+            </div>
+          </div>
+          <div class="dots" id="dots"><b class="on"></b><b></b><b></b></div>
+        </div>
+
+        <div class="msgs">
+          <div class="sysm" style="animation-delay:.5s">Jay created a LinkUp: Rooftop drinks</div>
+          <div class="bubble" style="animation-delay:.9s"><span class="name">Maya</span>who's up for tonight?? 🌆<span class="t tl">17:42</span></div>
+          <div class="bubble" style="animation-delay:1.3s"><span class="name c2">Jay</span>rooftop's booked for 6 👌<span class="t tl">17:44</span></div>
+          <div class="sysm" style="animation-delay:1.7s">Jay made Maya a co-host</div>
+          <div class="bubble me" style="animation-delay:2s">say less, going ✅<span class="t">17:45 <em class="tk">✓✓</em></span></div>
+          <div class="me-media" style="animation-delay:2.4s"><div class="mapc"><svg class="mapsvg" viewBox="0 0 200 130" preserveAspectRatio="none"><path d="M0 40H200M0 92H200M60 0V130M140 0V130M100 0L130 130" stroke="#263152" stroke-width="4" fill="none"/><path d="M0 66H200M28 0V130M172 0V130" stroke="#222D4C" stroke-width="2.5" fill="none"/><path d="M182 22C150 34 152 64 116 70 84 75 66 92 38 98" stroke="#3FD9FF" stroke-width="5.5" fill="none" stroke-linecap="round"/><circle cx="182" cy="22" r="6" fill="#fff" stroke="#3B82F6" stroke-width="3"/><path d="M38 82c-6.5 0-11 4.6-11 10.4C27 100 38 110 38 110s11-10 11-17.6C49 86.6 44.5 82 38 82z" fill="#E8453C"/><circle cx="38" cy="92" r="3.4" fill="#fff"/></svg><span class="maplabel">The Rooftop</span><span class="mapchip">🚶 15 min</span><span class="ptime">17:46 <em class="tk">✓✓</em></span></div></div>
+          <div class="bubble" style="animation-delay:2.8s"><span class="name">Maya</span>omw!! 🏃‍♀️<span class="t tl">17:48</span></div>
+        </div>
+
+        <div class="inbar">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h2.5l2-3h7l2 3H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/><circle cx="12" cy="14" r="3.6"/></svg></div>
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <div class="field">Message…</div>
+          <div class="send"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="how" id="how">
-<div class="ct">
-<div class="lb rv">How it works</div>
-<h2 class="hdg rv">Every plan has a life.<br>LinkUp gives it a home.</h2>
-<p class="stx rv">From the first idea to the final photo, your event flows through four natural phases.</p>
-<div class="timeline" id="timeline">
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-step">Step 01</div><h4>Plan</h4><p>Create a space. Add friends. Sort the details with chat, checklists, and shared decisions.</p><div class="tl-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div></div>
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-step">Step 02</div><h4>Anticipation</h4><p>Countdown begins. Excitement builds. Final details click into place as the day approaches.</p><div class="tl-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-step">Step 03</div><h4>Live event</h4><p>You are there. Share your location, drop photos in real time, and stay connected with everyone.</p><div class="tl-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
-<div class="tl-item"><div class="tl-dot"></div><div class="tl-step">Step 04</div><h4>Memory</h4><p>The event lives on. Photos, chats, and highlights archived in a beautiful timeline you can revisit.</p><div class="tl-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div></div>
-</div>
-</div>
+<!-- LIFECYCLE -->
+<section class="band" id="lifecycle">
+  <div class="band-head rv">
+    <h2>Every plan has a life. LinkUp follows it.</h2>
+    <p>Events aren't calendar entries — they move through four phases, and the app changes with them. The right things surface at the right time.</p>
+  </div>
+  <div class="phases">
+    <div class="phase rv" style="--pb:var(--plan-bg);--pc:var(--plan)">
+      <div class="pip">💭</div>
+      <small>PHASE 01</small>
+      <h3>Planning</h3>
+      <p>Throw the idea in the chat. Pick a date, collect RSVPs, argue about the venue.</p>
+      <div class="mini-ev"><span class="dotc">🗓️</span>Peak District trip<span class="mbadge"><i></i>PLANNING</span></div>
+    </div>
+    <div class="phase rv" style="--pb:var(--soon-bg);--pc:var(--soon);transition-delay:.06s">
+      <div class="pip">⏳</div>
+      <small>PHASE 02</small>
+      <h3>Coming up</h3>
+      <p>Under 24 hours out. Final headcount locks in and the card starts to buzz.</p>
+      <div class="mini-ev"><span class="dotc">🍕</span>Pizza night<span class="mbadge"><i></i>COMING UP</span></div>
+    </div>
+    <div class="phase rv" style="--pb:var(--live-bg);--pc:var(--live);transition-delay:.12s">
+      <div class="pip">🔥</div>
+      <small>PHASE 03</small>
+      <h3>Live</h3>
+      <p>It's happening. Photos shared in chat attach themselves to the event in real time.</p>
+      <div class="mini-ev"><span class="dotc">🌆</span>Rooftop drinks<span class="mbadge lv"><i></i>LIVE NOW</span></div>
+    </div>
+    <div class="phase rv" style="--pb:var(--mem-bg);--pc:var(--mem);transition-delay:.18s">
+      <div class="pip">✨</div>
+      <small>PHASE 04</small>
+      <h3>Memory</h3>
+      <p>When it ends, it doesn't disappear. It moves to your group's shared memories.</p>
+      <div class="mini-ev"><span class="dotc">🎉</span>Zara's 25th<span class="mbadge">✨ MEMORY</span></div>
+    </div>
+  </div>
 </section>
 
-<section class="feat-sec" id="features">
-<div class="ct">
-<div class="lb rv">Features</div>
-<h2 class="hdg rv" style="color:#fff">Everything your group chat<br>wishes it could do</h2>
-<p class="stx rv">Six things that make LinkUp feel like magic.</p>
-<div class="fg">
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h4>Full messaging</h4><p>Chat 1-to-1 or in groups, share media, voice notes. Your main messenger, not just for events.</p></div>
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><h4>Shared photos</h4><p>Everyone drops photos in one place. No more chasing people for their pics days later.</p></div>
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><h4>Voice &amp; video calls</h4><p>Call your friends directly. Group calls for planning. No need to switch to another app.</p></div>
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg></div><h4>Live location</h4><p>Share where you are when the event is happening. Find your friends without 10 texts.</p></div>
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h4>Live mode</h4><p>When the event goes live, the space transforms. Real-time updates and quick-share photos.</p></div>
-<div class="ft"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><h4>Memory archive</h4><p>After the event, it becomes a memory page. Photos, highlights, and chat preserved forever.</p></div>
-</div>
-</div>
+<!-- FEATURE 1: RSVP -->
+<section class="feat">
+  <div class="feat-copy rv">
+    <span class="kicker">RSVPs that live on the event</span>
+    <h2>One tap. Everyone knows who's in.</h2>
+    <p>No more scrolling back through 60 messages to work out the headcount. Each event carries its own Going / Maybe / Can't go — separate for every plan, visible to everyone.</p>
+    <ul>
+      <li>RSVP per event, not per group</li>
+      <li>See who's coming at a glance, with host badges</li>
+      <li>Changed your mind? Tap again. Done.</li>
+    </ul>
+  </div>
+  <div class="demo-card rv" style="transition-delay:.1s">
+    <div class="status-pill"><i></i>COMING UP</div>
+    <h3 class="ed-title">Pizza night</h3>
+    <span class="ed-starts">STARTS</span>
+    <div class="datechip"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Fri 6 Jun <i>·</i> <b>19:30</b></div>
+    <div class="pills" id="pills">
+      <button class="pill sel" data-r="going">Going</button>
+      <button class="pill" data-r="maybe">Maybe</button>
+      <button class="pill" data-r="cant">Can't go</button>
+    </div>
+    <div class="who">
+      <div class="wc-h">Who's coming</div>
+      <div class="wc-sec g">Going (<span id="goingCount">3</span>)</div>
+      <div class="wc-grid">
+        <div class="wc-cell"><span class="face" style="background:#EAF2FB">🧔🏽</span><span class="fbadge">HOST</span><span class="wc-name">Jay</span></div>
+        <div class="wc-cell"><span class="face" style="background:#F3EDFC">👩🏽</span><span class="fbadge co">CO-HOST</span><span class="wc-name">Maya</span></div>
+        <div class="wc-cell" id="youGoing"><span class="face you">🙋🏽</span><span class="wc-name">You</span></div>
+      </div>
+      <div class="wc-sec m">Maybe (<span id="maybeCount">1</span>)</div>
+      <div class="wc-grid">
+        <div class="wc-cell"><span class="face" style="background:#FDF3E3">👩🏻‍🦱</span><span class="wc-name">Sana</span></div>
+        <div class="wc-cell" id="youMaybe" style="display:none"><span class="face you">🙋🏽</span><span class="wc-name">You</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="soc" id="reviews">
-<div class="ct">
-<div class="lb rv">What people are saying</div>
-<h2 class="hdg rv">Plans feel different<br>on LinkUp</h2>
-<p class="stx rv">Early users who have made the switch.</p>
-<div class="tg">
-<div class="tc"><div class="ts2">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"We planned our entire Lisbon trip on LinkUp. The checklist alone saved us from forgetting half the essentials."</blockquote><div class="tw"><div class="tav" style="background:var(--pl)">JK</div><div><div class="tn">Jamie K.</div><div class="tr">Trip organiser</div></div></div></div>
-<div class="tc"><div class="ts2">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"The live location feature is unreal. No more where are you texts at festivals."</blockquote><div class="tw"><div class="tav" style="background:var(--lv)">AR</div><div><div class="tn">Aisha R.</div><div class="tr">Festival goer</div></div></div></div>
-<div class="tc"><div class="ts2">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"I love how it turns into a memory page after. We still look back at our summer BBQ photos."</blockquote><div class="tw"><div class="tav" style="background:var(--mm)">TS</div><div><div class="tn">Tom S.</div><div class="tr">Host extraordinaire</div></div></div></div>
-</div>
-</div>
+<!-- FEATURE 2: PHOTOS -->
+<section class="feat rev">
+  <div class="feat-copy rv">
+    <span class="kicker">Smart photo tagging</span>
+    <h2>Photos that know which event they belong to.</h2>
+    <p>Send a photo in the chat and it files itself under whichever event you're on. Planning two things at once? No mix-ups — your intent decides, not the clock.</p>
+    <ul>
+      <li>Chat photos auto-attach to the event in view</li>
+      <li>Every event builds its own gallery as you go</li>
+      <li>Add extras from your camera roll any time</li>
+    </ul>
+  </div>
+  <div class="demo-card rv" style="transition-delay:.1s">
+    <div class="tabbar"><span class="tab on">Photos</span><span class="tab">Location</span></div>
+    <div class="pgrid">
+      <div class="ptile a">🍕</div>
+      <div class="ptile b">🥤</div>
+      <div class="ptile c">😂</div>
+      <div class="ptile d">🎲</div>
+      <div class="ptile f">🧀</div>
+      <div class="ptile e">🌙</div>
+    </div>
+    <p class="photo-note">📎 Sent in chat → <b>saved to Pizza night</b> automatically</p>
+    <button class="addphoto"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>Add photo</button>
+  </div>
 </section>
 
-<section class="cta" id="cta">
-<h2>Stop planning in chaos.<br>Start <em>linking up</em>.</h2>
-<p>Free to download. Free to use. Your next plan deserves better.</p>
-<div class="cb">
-<a href="#" class="sb"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><div class="sbt"><small>Download on the</small><span>App Store</span></div></a>
-<a href="#" class="sb"><svg viewBox="0 0 24 24" fill="#fff"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-1.86c.39.22.64.64.64 1.12s-.25.9-.64 1.12l-2.19 1.24-2.71-2.71 2.71-2.71 2.19 1.24zM6.05 2.66l10.76 6.22-2.27 2.27L6.05 2.66z"/></svg><div class="sbt"><small>Get it on</small><span>Google Play</span></div></a>
-</div>
+<!-- FEATURE 3: ROLES -->
+<section class="feat">
+  <div class="feat-copy rv">
+    <span class="kicker">Hosts, co-hosts &amp; invites</span>
+    <h2>Someone's got to be in charge. Sort of.</h2>
+    <p>Whoever starts the group hosts it. Promote a co-host to share the wheel. Add friends by phone number — and if they're not on LinkUp yet, text them an invite in one tap.</p>
+    <ul>
+      <li>Host and co-host roles with real controls</li>
+      <li>Add anyone by phone number</li>
+      <li>One-tap SMS invite for friends not on LinkUp yet</li>
+    </ul>
+  </div>
+  <div class="demo-card rv" style="transition-delay:.1s">
+    <div class="sec-label">MEMBERS</div>
+    <div class="member">
+      <div class="m-av" style="background:linear-gradient(135deg,#FF8A5C,#E8531F)">JB</div>
+      <div class="m-info"><b>Jay</b><span class="role-sub">Host</span></div>
+      <span class="chev">›</span>
+    </div>
+    <div class="member">
+      <div class="m-av" style="background:linear-gradient(135deg,#7BB6F0,#3D7FC4)">MK</div>
+      <div class="m-info"><b>Maya</b><span class="role-sub">Co-host</span></div>
+      <span class="chev">›</span>
+    </div>
+    <div class="member">
+      <div class="m-av" style="background:linear-gradient(135deg,#66D9A3,#2A9D66)">SP</div>
+      <div class="m-info"><b>Sana</b></div>
+      <span class="chev">›</span>
+    </div>
+    <div class="invite-strip">
+      <div class="ic">💬</div>
+      <p><b>Riz isn't on LinkUp yet.</b> One tap sends them a text invite.</p>
+      <button class="invite-btn">Send invite</button>
+    </div>
+  </div>
 </section>
+
+<!-- MEMORIES -->
+<section class="mem">
+  <div class="mem-head">
+    <div class="rv">
+      <span class="mem-badge">✨ MEMORIES</span>
+      <h2>The night ends.<br>The <span>memory doesn't.</span></h2>
+      <p>Every finished event becomes a memory your group keeps — the photos, who came, the whole story in one place. Not buried in a camera roll. Not lost in the scroll. Kept.</p>
+    </div>
+    <div class="mem-quote rv" style="transition-delay:.1s">
+      The group chat scrolls on. The camera roll buries it. The memory stays here.
+    </div>
+  </div>
+
+  <div class="mem-inner">
+    <!-- opened memory -->
+    <div class="memory-card rv">
+      <div class="memory-cover">
+        <span class="bokeh bk1"></span><span class="bokeh bk2"></span><span class="bokeh bk3"></span><span class="bokeh bk4"></span>
+        <div class="stars">
+          <span class="st" style="left:12%;top:22%">✦</span>
+          <span class="st" style="left:78%;top:16%;animation-delay:.9s">✦</span>
+          <span class="st" style="left:64%;top:52%;animation-delay:1.7s">✧</span>
+          <span class="st" style="left:30%;top:44%;animation-delay:2.4s">✦</span>
+        </div>
+        <div class="memory-title">
+          <span class="mb">✨ MEMORY</span>
+          <h3>Zara's 25th</h3>
+          <span>Sat 14 Mar · Rooftop, Shoreditch</span>
+        </div>
+      </div>
+      <div class="memory-body">
+        <div class="memory-strip">
+          <div class="ms-tile mst1"></div>
+          <div class="ms-tile mst2"></div>
+          <div class="ms-tile mst3"></div>
+          <div class="ms-tile more">+31</div>
+        </div>
+        <div class="memory-meta">
+          <div class="memory-faces">
+            <div class="face you">Z</div>
+            <div class="face b">JB</div>
+            <div class="face c">MK</div>
+            <div class="face d">SP</div>
+          </div>
+          <span class="who-came"><b>8 came</b> · Zara hosted</span>
+        </div>
+        <div class="memory-stats">
+          <div class="mstat"><b>34</b><span>PHOTOS</span></div>
+          <div class="mstat"><b>8</b><span>WERE THERE</span></div>
+          <div class="mstat"><b>∞</b><span>REPLAYS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- shelf -->
+    <div class="mem-shelf rv" style="transition-delay:.12s">
+      <span class="shelf-label">YOUR GROUP'S SHELF</span>
+      <div class="shelf-item">
+        <div class="shelf-thumb" style="background:linear-gradient(135deg,#8FD3F4,#4A90D9)">🏔️</div>
+        <div class="shelf-info"><b>Peak District trip</b><span>Feb 2026 · 6 came</span></div>
+        <span class="shelf-count">52 📸</span>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-thumb" style="background:linear-gradient(135deg,#D5C8F5,#8F86AE)">🎆</div>
+        <div class="shelf-info"><b>NYE rooftop</b><span>Dec 2025 · 11 came</span></div>
+        <span class="shelf-count">89 📸</span>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-thumb" style="background:linear-gradient(135deg,#A8E6C9,#2FBF71)">⚽</div>
+        <div class="shelf-info"><b>Five-a-side final</b><span>Nov 2025 · 9 came</span></div>
+        <span class="shelf-count">17 📸</span>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-thumb" style="background:linear-gradient(135deg,#FFA8A8,#E85D5D)">🍜</div>
+        <div class="shelf-info"><b>Ramen crawl</b><span>Oct 2025 · 5 came</span></div>
+        <span class="shelf-count">23 📸</span>
+      </div>
+      <div class="shelf-cta">Every plan you finish lands here. <b>The shelf only grows.</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="join">
+  <div class="rv">
+    <h2>Your group chat deserves <em>better plans.</em></h2>
+    <p>LinkUp is in early beta on iOS. Grab a spot, drag your friends in, and tell us what breaks — that's the whole deal.</p>
+    <a class="btn-primary" href="#">Join the TestFlight beta</a>
+  </div>
+</section>
+
 <footer>
-<div class="fb"><img src="data:image/jpeg;base64,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" alt="LinkUp"><span>LinkUp</span></div>
-<div class="fl"><a href="https://highflyah-create.github.io/linkup-privacy/">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
-<div style="color:rgba(255,255,255,.2);font-size:.7rem">&copy; 2026 LinkUp. All rights reserved.</div>
+  <div class="foot-brand"><span class="brand-mark"><svg viewBox="0 0 26 26" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M5.5 2.5H11.5A3.5 3.5 0 0 1 15 6V10A3.5 3.5 0 0 1 11.5 13.5H8.8L5.5 16.9V13.5A3.5 3.5 0 0 1 2 10V6A3.5 3.5 0 0 1 5.5 2.5Z"/><path d="M14.5 9.5H20.5A3.5 3.5 0 0 1 24 13V17A3.5 3.5 0 0 1 20.5 20.5L21.6 23.9 18 20.5H14.5A3.5 3.5 0 0 1 11 17V13A3.5 3.5 0 0 1 14.5 9.5Z" stroke="var(--orange)" stroke-width="5.2"/><path d="M14.5 9.5H20.5A3.5 3.5 0 0 1 24 13V17A3.5 3.5 0 0 1 20.5 20.5L21.6 23.9 18 20.5H14.5A3.5 3.5 0 0 1 11 17V13A3.5 3.5 0 0 1 14.5 9.5Z"/></svg></span> LinkUp</div>
+  <span>Made for friend groups · © 2026 LinkUp</span>
 </footer>
+
 <script>
-var nav=document.getElementById('nav');
-window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)});
+// carousel auto-swipe
+(function(){
+  const track=document.getElementById('track');
+  const dots=[...document.getElementById('dots').children];
+  let i=0;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce)return;
+  setInterval(()=>{
+    i=(i+1)%3;
+    track.style.transform=`translateX(-${i*100}%)`;
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+  },3400);
+})();
 
-// Scroll observer for rv elements (label, heading, subtext)
-var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');rvObs.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.rv').forEach(function(el){el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='all .6s cubic-bezier(.16,1,.3,1)';rvObs.observe(el)});
+// rsvp pills
+(function(){
+  const pills=[...document.querySelectorAll('#pills .pill')];
+  const yg=document.getElementById('youGoing');
+  const ym=document.getElementById('youMaybe');
+  const gc=document.getElementById('goingCount');
+  const mc=document.getElementById('maybeCount');
+  function pop(el){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+  pills.forEach(p=>p.addEventListener('click',()=>{
+    pills.forEach(x=>x.classList.remove('sel'));
+    p.classList.add('sel');
+    const r=p.dataset.r;
+    yg.style.display=r==='going'?'':'none';
+    ym.style.display=r==='maybe'?'':'none';
+    gc.textContent=r==='going'?'3':'2';
+    mc.textContent=r==='maybe'?'2':'1';
+    if(r==='going')pop(yg);
+    if(r==='maybe')pop(ym);
+  }));
+})();
 
-// Timeline items
-var tlObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');tlObs.unobserve(e.target)}})},{threshold:.3,rootMargin:'0px 0px -60px 0px'});
-document.querySelectorAll('.tl-item').forEach(function(el,i){el.style.transitionDelay=(i*150)+'ms';tlObs.observe(el)});
-
-// Timeline line activation
-var lineObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active')}})},{threshold:.2});
-var tl=document.getElementById('timeline');
-if(tl)lineObs.observe(tl);
-
-// Feature cards - staggered
-var ftObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');ftObs.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.ft').forEach(function(el,i){el.style.transitionDelay=(i*100)+'ms';ftObs.observe(el)});
-
-// Testimonial cards - staggered
-var tcObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');tcObs.unobserve(e.target)}})},{threshold:.15});
-document.querySelectorAll('.tc').forEach(function(el,i){el.style.transitionDelay=(i*120)+'ms';tcObs.observe(el)});
+// reveal on scroll
+(function(){
+  const els=document.querySelectorAll('.rv');
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.18});
+  els.forEach(el=>io.observe(el));
+})();
 </script>
 </body>
 </html>
